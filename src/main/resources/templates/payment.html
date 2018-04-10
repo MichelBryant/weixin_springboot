@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<!-- meta tags start -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="perso, premium, mobile, template, HTML, CSS" />
+<meta name="Description" content="Premium mobile HTML/CSS template." />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<!-- meta tags end -->
+<title>支付订单</title>
+<link href="/css/ecshopstyle.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css" />
+<script src="/js/jquery-1.9.1.min.js"></script>
+</head>
+
+<body style="background-color: #eee;">
+<div class="ecshop_head" style="padding-bottom: 0px;"><p>支付订单</p></div>
+<div class="ecshop_peyment">
+<p>订单金额<span>￥1256</span></p>
+<hr style=" width: 100%; height: 1px; border:none; background-color: #eee; "></hr>
+<p>积分金额<span>561256</span></p>
+</div>
+<div class="ecshop_peyment_content">
+	<p>选择支付方式</p>
+	<ul>
+		<li>
+		<div class="peyment_content_img"><img src="/img/zhifubao_icon.png" alt=""/></div>
+		<div class="peyment_content_title"><p>积分支付</p><p><span>欢迎全球领先的独立</span></p></div>
+		<div class="peyment_content_iocn">
+			<input type="radio" name="sex" id="a" value="X" class="radio"><label for="a" class="radio"></label><br>
+		</div>
+		</li>
+		<li style="border:none;">
+		<div class="peyment_content_img"><img src="/img/wechat_icon.png" alt=""/></div>
+		<div class="peyment_content_title"><p>微信支付</p><p><span>欢迎登录支付宝,支付宝-全球领先的独立</span></p></div>
+		<div class="peyment_content_iocn">
+			 <input type="radio" name="sex" id="b" value="M" class="radio"><label for="b" class="radio" ></label><br>
+		</div>
+		</li>
+	</ul>
+</div>
+<div class="ecshop_shopcart_footer" style="height:70px;">
+   <div class="ecshop_shopcart_statement" style="margin-top: 10px;"><a href="#">立即支付</a></div>
+</div> 
+
+<script>
+
+    $(document).ready(function(){
+		//选择
+		var flag1='fa fa-circle-thin';
+		var flag2='fa fa-check-circle';
+		$('.peyment_content_iocn').click(function(){
+           var name= $(this).children().children().attr('class');
+           console.log(name);
+           if(name==flag1){
+               $(this).children().children().attr('class',flag2);
+               $(this).css('background',"#fff");
+               $(this).children().children().css('color','red');
+               $(this).children().children().css('font-size','24px');
+           } else{
+           	    $(this).children().children().attr('class',flag1);
+           	     $(this).css('background',"#fff");
+           	     $(this).children().children().css('color','#999');
+           	     $(this).children().children().css('font-size','18px');
+           }
+           });
+           
+		});
+		
+</script>
+</body>
+</html>

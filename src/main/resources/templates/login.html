@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+	<!-- meta tags start -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="Keywords" content="perso, premium, mobile, template, HTML, CSS" />
+	<meta name="Description" content="Premium mobile HTML/CSS template." />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>注册登录</title>
+
+<style type="text/css">
+*{margin:0;padding:0;list-style-type:none;}
+a,img{border:0;}
+body{font:12px/180% Arial, Helvetica, sans-serif, "新宋体";}
+</style>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/login.js"></script>
+
+</head>
+
+<body>
+
+
+	<div class="demo">
+		<nav class="main_nav">
+			<ul>
+				<li><a class="cd-signin" href="#0">登录</a></li>
+				<li><a class="cd-signup" href="#0">注册</a></li>
+			</ul>
+		</nav>
+	</div>
+	
+	<div class="cd-user-modal"> 
+		<div class="cd-user-modal-container">
+			<ul class="cd-switcher">
+				<li><a href="#0">用户登录</a></li>
+				<li><a href="#0">注册新用户</a></li>
+			</ul>
+
+			<div id="cd-login" > <!-- 登录表单 -->
+				<form class="cd-form" id="loginForm" action="login.action" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					<p class="fieldset">
+						<label class="image-replace cd-username" for="signin-username">用户名</label>
+						<input class="full-width has-padding has-border" id="signin-username" name="username" type="text" placeholder="输入用户名"  required>
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-password" for="signin-password">密码</label>
+						<input class="full-width has-padding has-border" id="signin-password" name="password" type="password"  placeholder="输入密码" required>
+					</p>
+
+					<p class="fieldset">
+						<input type="checkbox" id="remember-me" checked>
+						<label for="remember-me">记住登录状态</label>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a id="forgotPsw" href="#" style="text-align: right;"><label>忘记密码?</label></a>
+					</p>
+
+					<p class="fieldset">
+						<input class="full-width2" type="submit" value="登 录">
+					</p>
+				</form>
+			</div>
+
+			<div id="cd-signup" > <!-- 注册表单 -->
+				<form class="cd-form" method="post">
+					<p class="fieldset">
+						<label class="image-replace cd-username" for="signup-username">用户名</label>
+						<input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="输入用户名" required>
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-email" for="signup-email">邮箱</label>
+						<input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="输入mail" required>
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-password" for="signup-password">密码</label>
+						<input class="full-width has-padding has-border" id="signup-password" type="password"  placeholder="输入密码" required>
+					</p>
+
+					<p class="fieldset">
+						<input type="checkbox" id="accept-terms">
+						<label for="accept-terms">我已阅读并同意 <a href="#0">用户协议</a></label>
+					</p>
+
+					<p class="fieldset">
+						<input class="full-width2" type="submit" value="注册新用户" onclick="doSubmit()">
+					</p>
+				</form>
+			</div>
+
+			<a href="#0" class="cd-close-form">关闭</a>
+		</div>
+	</div> 
+<script type="text/javascript">
+    function doSubmit() {
+        var account = $("#signup-username").val();
+        var password = $("#signup-password").val();
+        var email = $("#signup-email").val();
+
+
+        $.ajax({
+            type:'post',
+            url:'register.action',
+            dataType:'json',
+            data:{
+                account:account,
+                password:password,
+                email:email
+            },
+            async:false,
+            success:function(data) {
+                if(data=="2"){
+                    window.location.href='login.action'
+                }else if(data=="1"){
+                    alert("用户名已注册");
+                }else{
+                    alert("注册失败");
+                }
+            },
+            error:function(){
+                alert("系统异常");
+            }
+        });
+    }
+</script>
+</body>
+</html>

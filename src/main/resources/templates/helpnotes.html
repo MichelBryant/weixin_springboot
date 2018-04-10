@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<!-- meta tags start -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="perso, premium, mobile, template, HTML, CSS" />
+<meta name="Description" content="Premium mobile HTML/CSS template." />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<!-- meta tags end -->
+<title>帮助说明</title>
+<link href="/css/ecshopstyle.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css" />
+<script type="text/javascript" src="/zepto_min.js"></script>
+<script type="text/javascript" src="/touchslider.js"></script>
+<style type="text/css">
+.page li{ width: 33%; }	
+.page a.active {color: #ffffff;background-color:#cf0000;border-radius: 4px; border:none;}
+.page li a{ height: 45px; }
+</style>
+</head>
+
+<body style="background-color: #eee;">
+<div class="ecshop_head" style="padding-bottom: 0px;"><p>帮助说明</p></div>
+<div class="ecshop_head" style="padding-bottom: 0px;"><p>全部订单</p></div>
+<div id="main" style=" overflow-x: hidden; width: 100%;background: #ffffff;margin-top: 70px;">		
+	<div class="box-163css" style="padding-top: 15px;width: 90%;margin-left: 5%; padding-bottom: 15px;">
+	   <ul id="pagenavi" class="page">
+         <li><a href="#" class="active">订单问题</a></li>
+      	 <li><a href="#">购物问题</a></li>
+         <li><a href="#">其他问题</a></li>
+       </ul>
+   </div>
+   </div>
+   <div id="slider" class="swipe" style="background-color: #fff; border-top: solid #eee 1px;">
+      <ul class="box01_list">
+         <li class="li_list">
+             <div class="ecshop_allorder_main">
+                 <div class="ecshop_helpnotes_list">
+         	        <a href="">物流配送</a><span><a href=""><img src="/img/turn-right_icon.png" alt=""/></a></span>
+                 </div>
+                 <div class="ecshop_helpnotes_list">
+         	        <a href="">物流配送</a><span><a href=""><img src="/img/turn-right_icon.png" alt=""/></a></span>
+                 </div>
+                 <div style="width: 100%; height: 120px;"></div>  
+              </div>
+         </li>
+         <li class="li_list">
+             <div class="ecshop_allorder_main">
+                 <div class="ecshop_helpnotes_list">
+         	        <a href="">物流配送</a><span><a href=""><img src="/img/turn-right_icon.png" alt=""/></a></span>
+                 </div>
+                 <div class="ecshop_helpnotes_list">
+         	        <a href="">物流配送</a><span><a href=""><img src="/img/turn-right_icon.png" alt=""/></a></span>
+                 </div>
+                 <div style="width: 100%; height: 120px;"></div>  
+              </div>
+         </li>
+        <li class="li_list">
+             <div class="ecshop_allorder_main">
+                 <div class="ecshop_helpnotes_list">
+         	        <a href="">物流配送</a><span><a href=""><img src="/img/turn-right_icon.png" alt=""/></a></span>
+                 </div>
+                 <div class="ecshop_helpnotes_list">
+         	        <a href="">物流配送</a><span><a href=""><img src="/img/turn-right_icon.png" alt=""/></a></span>
+                 </div>
+                 <div style="width: 100%; height: 120px;"></div>  
+              </div>
+              <div style="height: 1px;"></div>
+         </li>
+      </ul>
+   </div>
+</div>
+
+
+<script type="text/javascript">
+	var page='pagenavi';
+	var mslide='slider';
+	var mtitle='emtitle';
+	arrdiv = 'arrdiv';
+
+	var as=document.getElementById(page).getElementsByTagName('a');
+
+	var tt=new TouchSlider({id:mslide,'auto':'-1',fx:'ease-out',direction:'left',speed:600,timeout:5000,'before':function(index){
+		var as=document.getElementById(this.page).getElementsByTagName('a');
+		as[this.p].className='';
+		as[index].className='active';
+		this.p=index;
+		var txt=as[index].innerText;
+		$("#"+this.page).parent().find('.emtitle').text(txt);
+		var txturl=as[index].getAttribute('href');		
+		var turl=txturl.split('#');
+		$("#"+this.page).parent().find('.go_btn').attr('href',turl[1]);
+	}});
+
+	tt.page = page;
+	tt.p = 0;
+	//console.dir(tt); console.dir(tt.__proto__);
+	for(var i=0;i<as.length;i++){
+		(function(){
+			var j=i;
+			as[j].tt = tt;
+			as[j].onclick=function(){
+				this.tt.slide(j);
+				return false;
+			}
+		})();
+	}
+</script>
+</body>
+</html>

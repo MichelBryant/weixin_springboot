@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+    <title>JS-SDK </title>
+    <style type="text/css">
+
+        button{
+            width: 180px;
+            height: 60px;
+            background-color: lightgreen;
+            font-size: 25px;
+        }
+        span{
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>wechat js-sdk main</h1>
+<span>获取的签名为signature：${map.signature}</span>
+<span>appid:${map.appid}</span>
+<div id="getImg"></div>
+<button  onclick="onMenuShareQQ()">分享到QQ</button>
+<button  onclick="getImage()">选择一张照片</button>
+
+<button  onclick="getLocation()">获取地理位置</button>
+
+<button  onclick="getNetWork()">获取网络类型</button>
+<button  onclick="startRecord()">开启录音</button>
+<button  onclick="stopRecord()">关闭录音</button>
+<button  onclick="playVoice()">播放录音</button>
+<button  onclick="pauseVoice()">暂停播放</button>
+<button  onclick="stopVoice()">停止播放</button>
+<button  onclick="onVoicePlayEnd()">监听语音播放完毕</button>
+<button  onclick="openLocation()">查看位置</button>
+<button  onclick="scanQRCode()">微信扫一扫</button>
+<button  onclick="wxPay()">微信支付</button>
+
+
+<script src="resource/js/jquery.min.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript" >
+    $(function(){
+        var appidVal='${map.appid}';
+        var timestampVal = '${map.timestamp}';
+        var nonceStrVal = '${map.nonceStr}';
+        var signatureVal = '${map.signature}';
+        // alert(signatureVal);
+        //调用JS-SDK相关配置
+        wx.config({
+            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: appidVal, // 必填，公众号的唯一标识
+            timestamp: timestampVal, // 必填，生成签名的时间戳
+            nonceStr: nonceStrVal, // 必填，生成签名的随机串
+            signature: signatureVal,// 必填，签名，见附录1
+            jsApiList: [
+                'chooseImage',
+                'getLocation'
+            ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+        wx.ready(function(){
+            alert("验证成功!");
+        });
+        wx.error(function(res){
+            alert("验证失败："+ res.errMsg);
+        });
+
+        wx.checkJsApi({
+            jsApiList: ['chooseImage',
+                'getLocation'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+            success: function(res) {
+                console.log("chooseImage:"+res);
+                // 以键值对的形式返回，可用的api值true，不可用为false
+                // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+            }
+        });
+    });
+
+    //拍照或从手机相册中选图接口
+    function getImage(){
+        wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                alert(res);
+                var html='<p>'+res+'</p>';
+                $("#getImg").html(html);
+                var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            }
+        });
+    }
+    //获取地理坐标
+    function getLocation(){
+        wx.getLocation({
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: function (res) {
+                var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                var speed = res.speed; // 速度，以米/每秒计
+                var accuracy = res.accuracy; // 位置精度
+            }
+        });
+    }
+    //获取网络类型
+    function getNetWork(){
+        wx.getNetworkType({
+            success: function (res) {
+                var networkType = res.networkType; // 返回网络类型2g，3g，4g，wifi
+                alert(networkType);
+            }
+        });
+    }
+    var localId;
+    //开启录音接口
+    function startRecord(){
+        wx.startRecord();
+    }
+    //关闭录音接口
+    function stopRecord(){
+        wx.stopRecord({
+            success: function (res) {
+                localId = res.localId;
+            }
+        });
+    }
+    //播放录音接口
+    function playVoice(){
+        wx.playVoice({
+            localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
+        });
+    }
+    //暂停播放接口
+    function pauseVoice(){
+        wx.pauseVoice({
+            localId: localId // 需要暂停的音频的本地ID，由stopRecord接口获得
+        });
+    }
+    //停止播放接口
+    function stopVoice(){
+        wx.stopVoice({
+            localId: localId // 需要停止的音频的本地ID，由stopRecord接口获得
+        });
+    }
+    //监听语音播放完毕接口
+    function onVoicePlayEnd(){
+        wx.onVoicePlayEnd({
+            success: function (res) {
+                var localId = res.localId; // 返回音频的本地ID
+            }
+        });
+    }
+    //使用微信内置地图查看位置接口
+    function openLocation(){
+        wx.openLocation({
+            latitude: 20, // 纬度，浮点数，范围为90 ~ -90
+            longitude: 20, // 经度，浮点数，范围为180 ~ -180。
+            name: '河南省郑州市', // 位置名
+            address: '金水区经三路', // 地址详情说明
+            scale: 1, // 地图缩放级别,整形值,范围从1~28。默认为最大
+            infoUrl: 'http://www.baidu.com' // 在查看位置界面底部显示的超链接,可点击跳转
+        });
+    }
+    //调起微信扫一扫接口
+    function scanQRCode(){
+        wx.scanQRCode({
+            desc: 'scanQRCode desc',
+            needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+            scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+            success: function (res) {
+                // 回调
+                alert("扫描成功！");
+            },
+            error: function(res){
+                if(res.errMsg.indexOf('function_not_exist') > 0){
+                    alert('版本过低请升级')
+                }
+            }
+        });
+    }
+    //分享到QQ
+    function onMenuShareQQ(){
+        wx.onMenuShareQQ({
+            title: '微信分享QQ接口测试', // 分享标题
+            desc: '这是一段关于微信分享QQ接口测试的内容', // 分享描述
+            link: 'http://www.baidu.com', // 分享链接
+            imgUrl: 'http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKQLpbgIw5jleEcjHr0Ac9J49sT4JAlC7FnqH2CPRCOGHicEPpLdff6h1DGZ4K0wYEaz8k1uGftYiaA/0', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                alert("分享成功！");
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                alert("分享失败！");
+            }
+        });
+    }
+    function wxPay() {
+      console.log("微信支付...");
+    }
+</script>
+</body>
+</html>

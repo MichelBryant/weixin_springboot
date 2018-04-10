@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+<head>
+<!-- meta tags start -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="perso, premium, mobile, template, HTML, CSS" />
+<meta name="Description" content="Premium mobile HTML/CSS template." />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
+<!-- meta tags end -->
+<title>购物车</title>
+<link href="/css/ecshopstyle.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css" />
+<script src="/js/jquery-1.9.1.min.js"></script>
+</head>
+<style type="text/css">
+.btn{ position: absolute; top: 10px; right: -70px; text-align: center; background: #cf0000; color: #fff; width: 60px;height: 100px;
+  clear: both;    clear: both;font-size: 14px;line-height: 100px;}
+#list-ul{ overflow: hidden}
+.list-li{ position:relative;-webkit-transform: translateX(0px);}
+</style>
+
+<body style="background-color: #eee;">
+<div class="ecshop_head" style="padding-bottom: 0px;"><p>购物车</p></div>
+<div class="ecshop_shopcart_content">
+<section class="list">
+<ul id="list-ul">
+	<li data-price="1250" class="list-li">
+	   <div class="shopcart_content_icon"><a href="###" class="but_check" style="margin-top: 45px;"></a></div>
+	   <div class="shopcart_content_img"><img src="/img/shopcart_1.jpg" alt=""/></div>
+	   <div class="shopcart_content_name" >
+	   	   <p>黑蓝/米色修身蕾丝八分袖连衣裙</p><h2>￥1250</h2>
+	   	   <p style=" color: #999; font-size: 12px; width: 100%;">400ml<s>￥2560</s></p>
+	   	   <p style="width:50%; float: right; text-align: right; z-index: 9999;position: relative;">
+	   	   	  <input id="min" name=""  data-type="min" type="button" value="-" />  
+              <input id="text_box" data-type="amt" name="" type="text" value="1" />  
+              <input id="add" name="" data-type="add" type="button" value="+" /> 
+	   	   </p>
+	   </div>
+     <div class="con" style=" width: 100%; height: 100px;clear: both;top: 0px;position: absolute;"></div>
+     <div class="btn"><a href="javascript:;">删除</a></div>
+	</li>
+	<li style="border: none;" data-price="1250" id="li" class="list-li">
+	   <div class="shopcart_content_icon"><a href="###" class="but_check " style="margin-top: 45px;"></a></div>
+	   <div class="shopcart_content_img"><img src="/img/shopcart_2.jpg" alt=""/></div>
+	   <div class="shopcart_content_name">
+	     <p>黑蓝/米色修身蕾丝八分袖连衣裙</p><h2>￥1250</h2>
+	   	   <p style=" color: #999; font-size: 12px; width: 100%;">400ml<s>￥2560</s></p>
+	   	    <p style="width:50%; float: right; text-align: right; z-index: 9999;position: relative;">
+	   	   	  <input id="min" name="" data-type="min" type="button" value="-" />  
+              <input id="text_box" data-type="amt" name="" type="text" value="1" />  
+              <input id="add" data-type="add" name="" type="button" value="+" /> 
+	   	   </p>
+	   </div>
+    <div class="con" style=" width: 100%; height: 100px;clear: both;top: 0px;position: absolute;"></div>
+    <div class="btn"><a href="javascript:;">删除</a></div>
+	</li>
+</ul>
+</section>
+</div>
+<div class="ecshop_shopcart_footer">
+   <h2><a href="javascript:checkall(this)" class="but_check"></a><span>全选</span></h2>
+   <p>总金额：<span><label id="total"></label></span></p>	
+   <div class="ecshop_shopcart_statement"><a href="sumbitorder.html">结&nbsp&nbsp&nbsp算</a></div>
+</div>
+<div style="clear: both; height: 40px;"></div>
+<div class="ecshop_footer">
+	<li><a href="index/index.action"><div class="ecshop_footer_icon"><img src="/img/home_icon.png" alt=""/><p>首页</p></div></a></li>
+	<li><a href="index/classify.action"><div class="ecshop_footer_icon"><img src="/img/classify_icon.png" alt=""/><p>分类</p></div></a></li>
+	<li><a href="index/shopcart.action"><div class="ecshop_footer_icon"><img src="/img/shopcart_icon.png" alt=""/><p>购物车</p></div></a></li>
+	<li><a href="index/mycenter.action"><div class="ecshop_footer_icon"><img src="/img/user_icon.png" alt=""/><p>我的</p></div></a></li>
+</div>
+<script>
+
+    $(document).ready(function(){
+		//选择
+
+		$('.shopcart_content_icon').find(".but_check").click(function(){
+          if(!$(this).hasClass("checked")){
+            $(this).addClass("checked");
+          }else{
+            $(this).removeClass("checked");
+          }
+           
+		});
+
+})
+
+    function checkall(obj){
+      if(1!=$(obj).attr("data-check")){
+        $(".but_check").addClass("checked");
+        $(obj).attr("data-check","1");
+      }else{
+        $(".but_check").removeClass("checked");
+        $(obj).attr("data-check","0");
+      }
+    }
+
+		
+</script>
+<script>  
+$(function(){  
+ 
+    $("input[data-type=add]").click(function(){
+    var amt=$(this).parent().find("input[data-type=amt]");       
+      amt.val(parseInt(amt.val())+1)  
+        setTotal();  
+    })  
+    $("input[data-type=min]").click(function(){ 
+    var amt=$(this).parent().find("input[data-type=amt]");  
+		if(amt.val() !=1){
+        amt.val(parseInt(amt.val())-1)  
+        setTotal();  
+		}else{
+		//alert('不能减了，已经为0');
+		}
+    })  
+    
+
+    setTotal();  
+})  
+
+ function setTotal(){  
+
+  var total=0;
+
+  $.each($("li"),function(n,li){
+    total+=$(li).attr("data-price")*1.00*$(li).find("input[data-type=amt]").val();
+  });
+    $("#total").html(total);  
+    }  
+</script>
+<script type="text/javascript">
+    $(document).ready(function(e) {
+
+
+        // 获取所有行，对每一行设置监听
+        var lines = $(".line-normal-wrapper");
+        var len = lines.length;
+        var lastX, lastXForMobile;
+
+        // 用于记录被按下的对象
+        var pressedObj;  // 当前左滑的对象
+        var lastLeftObj; // 上一个左滑的对象
+
+        // 用于记录按下的点
+        var start;
+
+        // 网页在移动端运行时的监听
+        for (var i = 0; i < len; ++i) {
+            lines[i].addEventListener('touchstart', function(e){
+                lastXForMobile = e.changedTouches[0].pageX;
+                pressedObj = this; // 记录被按下的对象
+
+                // 记录开始按下时的点
+                var touches = event.touches[0];
+                start = {
+                    x: touches.pageX, // 横坐标
+                    y: touches.pageY  // 纵坐标
+                };
+            });
+
+            lines[i].addEventListener('touchmove',function(e){
+                // 计算划动过程中x和y的变化量
+                var touches = event.touches[0];
+                delta = {
+                    x: touches.pageX - start.x,
+                    y: touches.pageY - start.y
+                };
+
+                // 横向位移大于纵向位移，阻止纵向滚动
+                if (Math.abs(delta.x) > Math.abs(delta.y)) {
+                    event.preventDefault();
+                }
+            });
+
+            lines[i].addEventListener('touchend', function(e){
+                if (lastLeftObj && pressedObj != lastLeftObj) { // 点击除当前左滑对象之外的任意其他位置
+                    $(lastLeftObj).animate({marginLeft:"0"}, 500); // 右滑
+                    lastLeftObj = null; // 清空上一个左滑的对象
+                }
+                var diffX = e.changedTouches[0].pageX - lastXForMobile;
+                if (diffX < -60) {
+                    $(pressedObj).animate({marginLeft:"-80px"}, 500); // 左滑
+                    lastLeftObj && lastLeftObj != pressedObj &&
+                    $(lastLeftObj).animate({marginLeft:"0"}, 500); // 已经左滑状态的按钮右滑
+                    lastLeftObj = pressedObj; // 记录上一个左滑的对象
+                } else if (diffX > 60) {
+                    if (pressedObj == lastLeftObj) {
+                        $(pressedObj).animate({marginLeft:"0"}, 500); // 右滑
+                        lastLeftObj = null; // 清空上一个左滑的对象
+                    }
+                }
+            });
+        }
+
+        // 网页在PC浏览器中运行时的监听
+        for (var i = 0; i < len; ++i) {
+            $(lines[i]).bind('mousedown', function(e){
+                lastX = e.clientX;
+                pressedObj = this; // 记录被按下的对象
+            });
+
+            $(lines[i]).bind('mouseup', function(e){
+                if (lastLeftObj && pressedObj != lastLeftObj) { // 点击除当前左滑对象之外的任意其他位置
+                    $(lastLeftObj).animate({marginLeft:"0"}, 500); // 右滑
+                    lastLeftObj = null; // 清空上一个左滑的对象
+                }
+                var diffX = e.clientX - lastX;
+                if (diffX < -150) {
+                    $(pressedObj).animate({marginLeft:"-80px"}, 500); // 左滑
+                    lastLeftObj && lastLeftObj != pressedObj &&
+                    $(lastLeftObj).animate({marginLeft:"0"}, 500); // 已经左滑状态的按钮右滑
+                    lastLeftObj = pressedObj; // 记录上一个左滑的对象
+                } else if (diffX > 150) {
+                    if (pressedObj == lastLeftObj) {
+                        $(pressedObj).animate({marginLeft:"0"}, 500); // 右滑
+                        lastLeftObj = null; // 清空上一个左滑的对象
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

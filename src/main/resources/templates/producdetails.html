@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+<!-- meta tags start -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="perso, premium, mobile, template, HTML, CSS" />
+<meta name="Description" content="Premium mobile HTML/CSS template." />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<!-- meta tags end -->
+<title>商品详情</title>
+<link href="/css/ecshopstyle.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css" />
+<script src="/js/jquery-1.9.1.min.js"></script>
+<link type="text/css" href="/css/base.css" rel="stylesheet" />
+<style type="text/css">
+.slidesjs-pagination li a {
+    display: block;
+    width: 10px;
+    height: 0;
+    padding-top: 11px;
+    background-image: url(/img/pagination2.png);
+    background-position: 0 0;
+    float: left;
+    overflow: hidden;
+}
+.slidesjs-pagination li a.active, .slidesjs-pagination li a:hover.active {
+    background-position: 0px -11px;
+}
+.slidesjs-pagination li a:hover {background-position: 0 -22px}
+.slidesjs-pagination{margin-bottom: 10px;margin-left: -55px;}
+</style>
+</head>
+
+<body>
+<div class="ecshop_head" style="padding-bottom: 0px;"><p>fiona chen女装专场</p></div>
+<div class="ecshop_banner">
+<div class="container">
+    <div id="slides">
+      <img src="/img/product_details_1.jpg" alt=""/>
+      <img src="/img/product_details_1.jpg" alt=""/>
+	   <img src="/img/product_details_1.jpg" alt=""/>
+    </div>
+  </div>	
+</div>
+<div class="ecshop_details_banner_content">
+	 <p><span>￥</span>246<s>￥456</s><div class="discount2">4.5折</div><img src="/img/jifen_icon.png" alt=""/></p>
+	 <h2>JUZUI 宝蓝色典雅时尚八分袖连衣裙立领长袖荷叶边打底裙格纹连衣裙</h2>
+	 <p style=" font-size:18px;">尺码</p>
+	 <ul>
+	 <a href="javascript:;"><li class="size">S</li></a>
+	 <a href="javascript:;"><li class="size">M</li></a>
+	 <a href="javascript:;"><li class="size">X</li></a>
+	 <a href="javascript:;"><li class="size">XL</li></a>
+	 </ul>
+	 <p style=" font-size:18px;">颜色类型</p>
+	 <ul>
+	 <a href="javascript:;"><li class="color">白色</li></a>
+	 <a href="javascript:;"><li class="color">红色</li></a>
+	 <a href="javascript:;"><li class="color">蓝色</li></a>
+	 <a href="javascript:;"><li class="color">黄色</li></a>
+	 </ul>
+</div>
+<script type="text/javascript">
+	$('.size').click(function(){
+		   $('.size').css('background-color','#fff');
+		    $('.size').css('color','#666');
+           $(this).css('background-color','#cf0000');
+           $(this).css('color','#fff');
+	});
+	$('.color').click(function(){
+		   $('.color').css('background-color','#fff');
+		    $('.color').css('color','#666');
+           $(this).css('background-color','#cf0000');
+           $(this).css('color','#fff');
+	});
+</script>
+
+<hr style="width: 100%; height: 15px; border:none; background-color: #eee; margin: 0;padding: 0; "></hr>
+<div class="ecshop_details_main">
+<p>商品信息</p>
+<span>品牌名称：OSA<br/>
+商品名称：粉色韩版修身中长款休闲西装外套<br/>
+产地：深圳<br/>
+材质：面料：60.4%聚酯纤维 39.6%棉 里料：100%聚酯纤维<br/>
+洗涤说明：手洗，最高洗涤温度40℃，不可漂白，在阴凉处悬挂滴干，不可熨烫，不可干洗<br/>
+袖长：长袖  <br/>
+衣长：常规款 <br/><br/></span>
+<img src="/img/product_details_1.jpg" alt=""/>
+<img src="/img/product_details_2.jpg" alt=""/>
+<img src="/img/product_details_3.jpg" alt=""/>
+<div class="ecshop_top" style="margin-bottom: 70px;">
+<a href="javascript:scroll(0,0)"><img src="/img/top_icon.png" alt=""/ style=" width: 25px; height: 25px; margin-top: 10px;"></a></div>
+</div>
+<div class="ecshop_details_footer">
+	<div class="ecshop_details_footerleft">
+   <div class="cd-cart-container empty">
+      <a href="${base}/index/shopcart.action" class="cd-cart-trigger">
+      <ul class="count"> <!-- cart items count -->
+      <li>0</li>
+      <li>0</li>
+      </ul> <!-- .count -->
+      </a>
+  </div>
+
+  </div>
+	<div class="ecshop_details_footerright"><a href="#0" class="cd-add-to-cart" data-price="25.99">添加到购物车</a></div>
+</div>
+<script src="/js/jquery-1.9.1.min.js"></script>
+<script src="/js/jquery.slides.min.js"></script>
+  <script>
+    $(function() {
+      $('#slides').slidesjs({
+        width: 700,
+        height: 800,
+        navigation: false,
+        play: {
+            active: false,
+            auto: false,
+            interval: 4000,
+            swap: false
+        }
+      });
+    });
+  </script>
+  <!-- End SlidesJS Required -->
+<script src="/js/main.js"></script>
+</body>
+</html>

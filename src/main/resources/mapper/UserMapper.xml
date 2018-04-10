@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.beyondlmz.mapper.UserMapper" >
+
+    <sql id="commonSql">
+         id,openid,nickname,password,account,email
+    </sql>
+   <select id="findAllUser" resultType="com.beyondlmz.entity.SysUser">
+       SELECT <include refid="commonSql"></include>  from t_user
+</select>
+
+    <select id="loginUser" parameterType="com.beyondlmz.entity.SysUser" resultType="com.beyondlmz.entity.SysUser">
+        SELECT   <include refid="commonSql"></include> from t_user where account=#{account} and password=#{password}
+    </select>
+    <select id="findUserByAccount" parameterType="java.lang.String" resultType="com.beyondlmz.entity.SysUser">
+       select <include refid="commonSql"></include> from t_user where account=#{account}
+    </select>
+    
+    <insert id="add" parameterType="com.beyondlmz.entity.SysUser">
+        INSERT INTO t_user(openid,nickname,password,account,email)
+        VALUES (#{openid},#{nickname},#{password}
+        ,#{account},#{email})
+    </insert>
+    
+
+</mapper>

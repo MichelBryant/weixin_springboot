@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.beyondlmz.mapper.WeixinMapper" >
+
+    <sql id="commonSql">
+        select openid,nickname,sex,language,city,province,country,headimgurl,privilege from t_weixin
+    </sql>
+   <select id="getWxInfoByOpenId" resultType="com.beyondlmz.entity.WxUserInfo" parameterType="java.lang.String">
+  <include refid="commonSql"></include> where openid=#{openId}
+</select>
+    <insert id="saveWxUserInfo"  parameterType="com.beyondlmz.entity.WxUserInfo">
+      INSERT INTO t_weixin(openid,nickname,sex,language,city,province,country,headimgurl,privilege)
+      VALUES (${openid},${nickname},${sex},${language},${city},${province},${country},${headimgurl},${privilege})
+    </insert>
+    <update id="updateWxUserInfo" parameterType="com.beyondlmz.entity.WxUserInfo">
+        UPDATE t_weixin
+        <set>
+            <if test="openid!=null">openid=#{openid},</if>
+            <if test="nickname!=null">nickname=#{nickname},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="language!=null">language=#{language},</if>
+            <if test="city!=null">city=#{city},</if>
+            <if test="province!=null">province=#{province},</if>
+            <if test="country!=null">country=#{country},</if>
+            <if test="headimgurl!=null">headimgurl=#{headimgurl},</if>
+            <if test="privilege!=null">privilege=#{privilege},</if>
+        </set>
+        WHERE openid=#{openid}
+    </update>
+    
+
+</mapper>

@@ -10,6 +10,7 @@
 <title>支付订单</title>
 <link href="/css/ecshopstyle.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css" />
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="/js/jquery-1.9.1.min.js"></script>
 </head>
 
@@ -40,7 +41,7 @@
 	</ul>
 </div>
 <div class="ecshop_shopcart_footer" style="height:70px;">
-   <div class="ecshop_shopcart_statement" style="margin-top: 10px;"><a href="#">立即支付</a></div>
+   <div class="ecshop_shopcart_statement" style="margin-top: 10px;"><a href="#" onclick="submitAndPay();">立即支付</a></div>
 </div> 
 
 <script>
@@ -64,8 +65,77 @@
            	     $(this).children().children().css('font-size','18px');
            }
            });
+
+        payInit();
            
 		});
+
+    function payInit() {
+        //加载微信支付配置
+        $.ajax({
+            type : "GET",
+            url : "/wx/jsInit.action",
+            data : {
+                "config_url":window.location.href,
+            },
+            dataType : "json",
+            success : function(data) {
+                wx.config({
+                    debug: true,//开启调试模式
+                    appId: data.appid,
+                    timestamp: data.timestamp,
+                    nonceStr: data.nonceStr,
+                    signature: data.signature,
+                    jsApiList: [
+                        'checkJsApi',
+                        'chooseWXPay',
+                        'chooseImage',
+                        'uploadImage',
+                        'downloadImage'
+                    ]
+                });
+
+                wx.ready(function(){
+                    alert("验证通过");
+                });
+
+                wx.error(function(res){
+                    alert('验证失败');
+                });
+            }
+        });
+    }
+    
+    function submitAndPay() {
+        //发起微信支付
+        $.ajax({
+            type : "GET",
+            url : "/wx/pay.action",
+            data : {
+                tradeId:'2306231423458709'
+            },
+            dataType : "json",
+            success : function(data) {
+                wx.chooseWXPay({
+                    timestamp: data.timeStamp,
+                    nonceStr: data.nonceStr,
+                    package: data.packageValue,
+                    signType: data.signType, // 注意：新版支付接口使用 MD5 加密
+                    paySign: data.paySign,
+                    success: function (res) {
+                        console.log(res);
+                    },
+                    cancel:function (res) {
+                        alert('支付取消');
+                    },
+                    fail: function (res) {
+                        alert("支付失败");
+                        //window.location.reload();
+                    }
+                });
+            }
+        });
+    }
 		
 </script>
 </body>

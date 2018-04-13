@@ -27,7 +27,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 // 所有用户均可访问的资源
-                .antMatchers("/css/**", "/js/**","/img/**", "/webjars/**", "**/favicon.ico", "/wx.action","/wxLogin.action","/wxToken.action","/wxCallBack.action","/index/**").permitAll()
+                .antMatchers("/css/**", "/js/**","/img/**",
+                        "/webjars/**", "**/favicon.ico", "/wx.action",
+                        "/wx/**","/wxToken.action",
+                        "/wxCallBack.action","/index/**").permitAll()
                 // ROLE_USER的权限才能访问的资源
                 .antMatchers("/user/**").hasRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
@@ -44,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout.action")
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .logoutSuccessUrl("/login.action").permitAll();;                       //登陆页面全部权限可访问
+                .logoutSuccessUrl("/login.action").permitAll();                       //登陆页面全部权限可访问
 
         super.configure(http);
     }

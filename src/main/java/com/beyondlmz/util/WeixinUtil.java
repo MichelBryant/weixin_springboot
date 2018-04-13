@@ -1,14 +1,17 @@
 package com.beyondlmz.util;
 
 import java.security.MessageDigest;
-import java.util.Formatter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class WeixinUtil {
+
+    /***
+     * 支付密钥
+     */
+    private static String API_KEY="7A9585928A394CCAF1A666A0DEACAE4A";
     
 	 /***
-     * ֧���ӿڵ�ַ
+     * 统一下单
      */
     public static String PAY_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
     
@@ -21,13 +24,13 @@ public class WeixinUtil {
      */
     public static Map<String, String> sign(String jsapi_ticket, String url)	throws Exception {
         Map<String, String> ret = new HashMap<String, String>();
-        //����Ϊ1���ַ������֣�
+        //初始化签名
         String nonce_str = StringUtil.getRandomString(16,"1");
         String timestamp = (System.currentTimeMillis() / 1000) + "";
         String string1;
         String signature = "";
 
-        // ע���������������ȫ��Сд���ұ�������
+        // ע���������������������ȫ��Сд���ұ�
         string1 = "jsapi_ticket=" + jsapi_ticket + "&noncestr=" + nonce_str
                 + "&timestamp=" + timestamp + "&url=" + url;
 
@@ -52,6 +55,30 @@ public class WeixinUtil {
         String result = formatter.toString();
         formatter.close();
         return result;
+    }
+
+    /***
+     * 生成微信支付签名
+     * @return
+     * @throws Exception
+     */
+    public static String createPaySign(SortedMap<String, String> packageParams) throws Exception {
+        StringBuffer sb = new StringBuffer();
+        Set<Map.Entry<String, String>> es = packageParams.entrySet();
+        Iterator<Map.Entry<String, String>>  it = es.iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, String> entry =  it.next();
+            String k =entry.getKey();
+            String v =entry.getValue();
+            if (null != v && !"".equals(v) && !"sign".equals(k)
+                    && !"key".equals(k)) {
+                sb.append(k + "=" + v + "&");
+            }
+        }
+        sb.append("key=" + API_KEY);
+        String str=sb.toString();
+        String sign = EncryptUtil.MD5(str);
+        return sign;
     }
     
 }

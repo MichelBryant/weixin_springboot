@@ -47,7 +47,7 @@ public class LoginController {
     @RequestMapping("/loginQr.action")
     public void ewmQR(HttpServletRequest request, HttpServletResponse response) throws Exception{
         String ewmAddress = "http://"+request.getServerName()+":"+request.getServerPort()+""+request.getContextPath();//当前项目地址
-        String forwardActionUrl = "/wxLogin.action";//微信扫码跳转路径
+        String forwardActionUrl = "/wx/wxLogin.action";//微信扫码跳转路径
         StringBuffer  contents=new StringBuffer();
         contents.append(ewmAddress);
         contents.append(forwardActionUrl);

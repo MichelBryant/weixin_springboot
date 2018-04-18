@@ -81,6 +81,10 @@ public class DemoApplication extends WebMvcConfigurerAdapter {
 	}
 
 
+	/**
+	 * SpringBoot 注册Servlet
+	 * @return
+	 */
 	@Bean
 	public ServletRegistrationBean testWxServlet() {
 		ServletRegistrationBean registration = new ServletRegistrationBean(new WeixinServlet());

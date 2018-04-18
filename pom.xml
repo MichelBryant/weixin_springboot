@@ -27,6 +27,19 @@
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>me.hao0</groupId>
+			<artifactId>alipay-api</artifactId>
+			<version>1.3.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>me.hao0</groupId>
+			<artifactId>common</artifactId>
+			<version>1.0.9</version>
+		</dependency>
+
 		<!--springboot框架初始spring相关依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

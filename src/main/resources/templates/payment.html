@@ -10,7 +10,10 @@
 <title>支付订单</title>
 <link href="/css/ecshopstyle.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css" />
+	<!--微信H5支付引入 -->
 <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<!--支付宝H5支付引入 -->
+	<script src="https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.min.js"></script>
 <script src="/js/jquery-1.9.1.min.js"></script>
 </head>
 
@@ -26,14 +29,14 @@
 	<ul>
 		<li>
 		<div class="peyment_content_img"><img src="/img/zhifubao_icon.png" alt=""/></div>
-		<div class="peyment_content_title"><p>积分支付</p><p><span>欢迎全球领先的独立</span></p></div>
+		<div class="peyment_content_title"><p>支付宝支付</p><p><span>欢迎登录支付宝,支付宝-全球领先的独立</span></p></div>
 		<div class="peyment_content_iocn">
 			<input type="radio" name="sex" id="a" value="X" class="radio"><label for="a" class="radio"></label><br>
 		</div>
 		</li>
 		<li style="border:none;">
 		<div class="peyment_content_img"><img src="/img/wechat_icon.png" alt=""/></div>
-		<div class="peyment_content_title"><p>微信支付</p><p><span>欢迎登录支付宝,支付宝-全球领先的独立</span></p></div>
+		<div class="peyment_content_title"><p>微信支付</p><p><span>欢迎登录微信,微信-全球领先的独立</span></p></div>
 		<div class="peyment_content_iocn">
 			 <input type="radio" name="sex" id="b" value="M" class="radio"><label for="b" class="radio" ></label><br>
 		</div>
@@ -66,11 +69,11 @@
            }
            });
 
-        payInit();
+        payWxInit();
            
 		});
 
-    function payInit() {
+    function payWxInit() {
         //加载微信支付配置
         $.ajax({
             type : "GET",
@@ -104,6 +107,26 @@
                 });
             }
         });
+    }
+    
+    function aliPayInit() {
+        ap.chooseImage(function(res){
+            if(res.apFilePaths && res.apFilePaths.length > 0) {
+                yourImageDom.onload = function() {
+                    ap.alert('图片加载成功');
+                };
+                yourImageDom.onerror = function() {
+                    ap.showToast('图片加载失败');
+                };
+                yourImageDom.src = res.apFilePaths[0];
+            }
+        });
+
+        ap.confirm('Hello Alipay!', function(result){
+            ap.showToast(result.confirm ? '确定' : '取消');
+        });
+
+
     }
     
     function submitAndPay() {

@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**", "/js/**","/img/**",
                         "/webjars/**", "**/favicon.ico", "/wx.action",
                         "/wx/**","/wxToken.action",
-                        "/wxCallBack.action","/index/**").permitAll()
+                        "/wxCallBack.action","/index/**","/pays/**").permitAll()
                 // ROLE_USER的权限才能访问的资源
                 .antMatchers("/user/**").hasRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")

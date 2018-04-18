@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head lang="zh">
+    <meta charset="UTF-8">
+    <title>previewImage</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://as.alipayobjects.com/g/antui/antui/10.0.18/dpl/??antui.css,widget/notice.css">
+    <style>
+        .demo {
+            margin: 1em 0;
+            padding: 1em 1em 2em;
+            background: #fff;
+        }
+
+        .demo h1 {
+            padding-left: 8px;
+            font-size: 24px;
+            line-height: 1.2;
+            border-left: 3px solid #108EE9;
+        }
+
+        .demo h1,
+        .demo p {
+            margin: 1em 0;
+        }
+
+        .demo .am-button + .am-button,
+        .demo .btn + .btn,
+        .demo .btn:first-child {
+            margin-top: 10px;
+        }
+
+        .fn-hide {
+            display: none !important;
+        }
+
+        input {
+            display: block;
+            padding: 4px 10px;
+            margin: 10px 0;
+            line-height: 28px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<div class="am-notice" id="J_envTip20161108">
+    <div class="am-notice-content">请在支付宝 App 内查看演示 :(</div>
+</div>
+<script>
+    function getQuery() {
+        var match;
+        var urlParams = {};
+        var pl = /\+/g;
+        var search = /([^&=]+)=?([^&]*)/g;
+        var decode = function (s) {
+            return decodeURIComponent(s.replace(pl, ' '));
+        };
+        var query = decodeURI(window.location.search.substring(1));
+
+        while (match = search.exec(query)) {
+            urlParams[decode(match[1])] = decode(match[2]);
+        }
+
+        return urlParams;
+    }
+</script>
+<div class="demo">
+    <script src="https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.inc.min.js"></script>
+
+    <style>.img{ display:block; max-width: 100%; margin: 20px auto;}</style>
+    <style>
+        .output{ display:block; max-width: 100%; overflow: auto}
+    </style>
+    <button id="J_btn" class="btn btn-default am-button">选择图片</button>
+    <img id="J_img" class="img">
+    <button id="J_btn_preview" class="btn btn-default">预览图片</button>
+    <button id="J_btnVideo" class="btn btn-default">选择视频</button>
+    <button id="J_btn_location" class="btn btn-default">获取当前位置信息</button>
+    <button id="J_btn_scanQR" class="btn btn-default">扫一扫二维码</button>
+    <button id="J_btn_scanBAR" class="btn btn-default">扫一扫条形码</button>
+    <button id="J_btn_url" class="btn btn-default">打开淘宝首页</button>
+    <button id="J_btn_withData" class="btn btn-default">打开高德地图搜索页面</button>
+    <button id="J_btn_pop" class="btn btn-default">退出页面</button>
+    <button id="J_btn_popData" style="display:none" class="btn btn-default">退出页面(带数据)</button>
+    <button id="J_btn_push" style="display:none" class="btn btn-default">打开新页面</button>
+    <button id="J_btnAlert" class="btn btn-default">alert</button>
+    <button id="J_btnConfirm" class="btn btn-default">confirm</button>
+    <button id="J_btnShare" class="btn btn-default">打开分享面板</button>
+    <button id="J_btnGPS" class="btn btn-default">选择城市（带定位）</button>
+    <button id="J_btnCustom" class="btn btn-default">选择城市（自定义）</button>
+    <button id="J_btnDate" class="btn btn-default">选择日期</button>
+    <button id="J_btnTime" class="btn btn-default">选择时间</button>
+    <button id="J_btnDateTime" class="btn btn-default">选择日期时间</button>
+    <script>
+        var btn = document.querySelector('#J_btn');//选择图片
+        var img = document.querySelector('#J_img');
+        btn.addEventListener('click', function(){
+            ap.chooseImage(2, function(res){
+                ap.alert(JSON.stringify(res));
+                if ( img instanceof HTMLImageElement ) {
+                    img.src = res.apFilePaths[0];
+                }
+            });
+        });
+
+        var btnPreview = document.querySelector('#J_btn_preview');//预览图片
+        btnPreview.addEventListener('click', function(){
+            ap.previewImage({
+                current: 2,
+                urls: [
+                    'https://img.alicdn.com/tps/TB1sXGYIFXXXXc5XpXXXXXXXXXX.jpg',
+                    'https://img.alicdn.com/tps/TB1pfG4IFXXXXc6XXXXXXXXXXXX.jpg',
+                    'https://img.alicdn.com/tps/TB1h9xxIFXXXXbKXXXXXXXXXXXX.jpg'
+                ]
+            });
+        });
+        var J_btnVideo = document.querySelector('#J_btnVideo');//选择视频
+        J_btnVideo.addEventListener('click', function(){
+            ap.chooseVideo(3, function(res){
+                ap.alert(JSON.stringify(res));
+            });
+        });
+        var btnLocation = document.querySelector('#J_btn_location');//获取当前地理位置
+        var output = document.querySelector('#J_output');
+        btnLocation.addEventListener('click', function(){
+            ap.getLocation(function(res) {
+                output.innerHTML = JSON.stringify(res, undefined, '  ');
+            });
+        });
+        var btnScanQR = document.querySelector('#J_btn_scanQR');//二维码扫一扫
+        var btnScanBAR = document.querySelector('#J_btn_scanBAR');//条形码扫一扫
+        btnScanQR.addEventListener('click', function(){
+            ap.scan(function(res){
+                ap.alert(res.code);
+            });
+        });
+        btnScanBAR.addEventListener('click', function(){
+            ap.scan({
+                type: 'bar'
+            }, function(res){
+                ap.alert(res.code);
+            });
+        });
+        var btnUrl = document.querySelector('#J_btn_url');//跳转淘宝
+        var btnWithData = document.querySelector('#J_btn_withData');//跳转高德地图
+        btnUrl.addEventListener('click', function(){
+            ap.pushWindow('https://m.taobao.com/#index');
+        });
+        btnWithData.addEventListener('click', function(){
+            ap.pushWindow({
+                url: 'http://uri.amap.com/search',
+                data: {
+                    keyword: '美食',
+                    city: '310100',
+                    view: 'map'
+                }
+            });
+        });//退出当前页面
+        var btnPop = document.querySelector('#J_btn_pop');
+        btnPop.addEventListener('click', function(){
+            ap.popWindow();
+        });
+        var btnPush = document.querySelector('#J_btn_push');//打开新页面
+        var J_btn_popData = document.querySelector('#J_btn_popData');//关闭页面（带数据）
+        if ( btnPush instanceof HTMLElement && J_btn_popData instanceof HTMLElement ) {
+            if (ap.parseQueryString().for === 'resume') {
+                J_btn_popData.style.display = 'block'
+            } else {
+                btnPush.style.display = 'block';
+
+                ap.onResume(function(res){
+                    ap.alert('城市：' + res.data.city);
+                });
+            }
+        }
+        btnPush.addEventListener('click', function(){
+            ap.pushWindow({
+                url: 'onResume-demo.html',
+                data: {
+                    for: 'resume'
+                }
+            });
+        });
+        J_btn_popData.addEventListener('click', function(){
+            ap.popWindow({
+                data: {
+                    city: '上海',
+                    adCode: '310100'
+                }
+            });
+        });
+        var btnAlert = document.querySelector('#J_btnAlert');//Alert
+        btnAlert.addEventListener('click', function(){
+            ap.alert({
+                title: '亲',
+                content: '您有新的快递消息',
+                buttonText: '我知道了'
+            }, function(){
+                //可直接传入一个字符串当作 OPTION.content 参数
+                ap.alert('用户点击了「我知道了」');
+            });
+        });
+        var btnConfirm = document.querySelector('#J_btnConfirm');//Confirm
+        btnConfirm.addEventListener('click', function(){
+            ap.confirm({
+                title: '温馨提示',
+                content: '您是否想查询快递单号：\n1234567890',
+                confirmButtonText: '马上查询',
+                cancelButtonText: '暂不需要'
+            }, function(result){
+                ap.alert(''+result.confirm);
+            });
+        });
+        var btnShare = document.querySelector('#J_btnShare');//分享
+        btnShare.addEventListener('click', function(){
+            ap.share({
+                title: 'title',
+                content: 'content',
+                url: location.href
+            }, function(result){
+                ap.alert(result.shareResult);
+            });
+        });
+        var btnGPS = document.querySelector('#J_btnGPS');//选择城市，带GPS
+        var btnCustom = document.querySelector('#J_btnCustom');//选择城市，自定义
+        btnGPS.addEventListener('click', function(){
+            ap.chooseCity({
+                showLocatedCity: true
+            }, function(res) {
+                ap.alert(res.city + ':' + res.adCode);
+            });
+        });
+        btnCustom.addEventListener('click', function(){
+            ap.chooseCity({
+                cities: [
+                    {
+                        city: '朝阳区',
+                        adCode: '110105',
+                        spell: 'chaoyang'
+                    },
+                    {
+                        city: '海淀区',
+                        adCode: '110108',
+                        spell: 'haidian'
+                    },
+                    {
+                        city: '丰台区',
+                        adCode: '110106',
+                        spell: 'fengtai'
+                    },
+                    {
+                        city: '东城区',
+                        adCode: '110101',
+                        spell: 'dongcheng'
+                    },
+                    {
+                        city: '西城区',
+                        adCode: '110102',
+                        spell: 'xicheng'
+                    },
+                    {
+                        city: '房山区',
+                        adCode: '110111',
+                        spell: 'fangshan'
+                    }
+                ],
+                hotCities: [
+                    {
+                        city: '朝阳区',
+                        adCode: '110105'
+                    },
+                    {
+                        city: '海淀区',
+                        adCode: '110108'
+                    },
+                    {
+                        city: '丰台区',
+                        adCode: '110106'
+                    }
+                ]
+            }, function(res){
+                ap.alert(res.city + ':' + res.adCode);
+            });
+        });
+        var btnDate = document.querySelector('#J_btnDate');//选择日期
+        var btnTime = document.querySelector('#J_btnTime');//选择时间
+        var btnDateTime = document.querySelector('#J_btnDateTime');//选择日期时间
+        btnDate.addEventListener('click', function(){
+            ap.datePicker({
+                formate: 'yyyy-MM-dd',
+                currentDate: '2012-12-12',
+                startDate: '2012-12-10',
+                endDate: '2012-12-15'
+            }, function(res) {
+                ap.alert(res.date);
+            });
+        });
+        btnTime.addEventListener('click', function(){
+            ap.datePicker({
+                formate: 'HH:mm:ss',
+                currentDate: '12:12:12',
+                startDate: '11:11:11',
+                endDate: '13:13:13'
+            }, function(res) {
+                ap.alert(res.date);
+            });
+        });
+        btnDateTime.addEventListener('click', function(){
+            ap.datePicker({
+                formate: 'yyyy-MM-dd HH:mm:ss',
+                currentDate: '2012-01-09 11:11:11',
+                startDate: '2012-01-01 11:11:11',
+                endDate: '2012-01-10 11:11:11'
+            }, function(res) {
+                ap.alert(res.date);
+            });
+        });
+
+    </script>
+</div>
+<script>
+    (function() {
+        var eTipElement = document.getElementById('J_envTip20161108');
+        if (!/AlipayClient/i.test(navigator.userAgent)) {
+            eTipElement.classList.remove('fn-hide');
+        }
+        if (location.href.indexOf('/en-us/') >= 0) {
+            eTipElement.querySelector('.am-notice-content').innerText = 'To run the demo, open this page in Alipay APP';
+        }
+
+        var buttons = document.querySelectorAll('.btn');
+        if (buttons.length > 0) {
+            var length = buttons.length;
+            var i = 0;
+            for (; i < length; i++) {
+                buttons[i].classList.add('am-button');
+            }
+        }
+    })();
+</script>
+</body>
+</html>

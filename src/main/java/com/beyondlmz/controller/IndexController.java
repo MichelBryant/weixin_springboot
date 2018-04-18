@@ -19,8 +19,6 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("index")
 public class IndexController {
 
-    @Autowired
-    private WeixinService weixinService;
 
    @RequestMapping(value = {"index.action","toIndex.action"})
     public String index(){
@@ -41,5 +39,14 @@ public class IndexController {
     @RequestMapping("weixinSDK.action")
     public String weixinSDK(){
         return "weixinSDK";
+    }
+
+    @RequestMapping("aliPaySdk.action")
+    public String aliPaySdk(){
+        return "aliPaySdk";
+    }
+    @RequestMapping("aliPayJsSdk.action")
+    public String aliPayJsSdk(){
+        return "aliPayJsSdk";
     }
 }
